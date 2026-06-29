@@ -1,0 +1,15 @@
+fastapi==0.111.0
+uvicorn==0.29.0
+transformers==4.40.1
+torch==2.3.0
+yfinance==0.2.40
+curl_cffi>=0.15
+feedparser==6.0.11
+oracledb==2.1.2
+APScheduler==3.10.4
+streamlit==1.34.0
+pydantic==2.7.1
+sqlalchemy==2.0.30
+pandas==2.2.2
+beautifulsoup4==4.12.3
+aiohttp==3.9.5
