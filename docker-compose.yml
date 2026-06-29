@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  agent:
+    build: .
+    container_name: sentiment-agent
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DB_URL=sqlite:///./data/sentiment.db
+      # To use OCI Autonomous Database, set DB_URL like below:
+      # - DB_URL=oracle+oracledb://username:password@dsn
+    restart: always
+
+  dashboard:
+    build: .
+    container_name: sentiment-dashboard
+    command: streamlit run dashboard.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DB_URL=sqlite:///./data/sentiment.db
+      - API_URL=http://agent:8000/api
+    depends_on:
+      - agent
+    restart: always
